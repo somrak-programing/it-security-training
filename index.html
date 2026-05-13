@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Security Training 2025 — TCP-R</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0a0f1e;--bg2:#0f1628;--bg3:#141c35;--card:#111827;
+    --border:rgba(99,120,220,0.18);--border2:rgba(99,120,220,0.35);
+    --accent:#4f7cff;--accent2:#7c5cfc;--accent3:#00d4aa;
+    --text:#e8eaf6;--text2:#9aa5c4;--text3:#5a6785;
+    --red:#ff5c72;--amber:#ffb84d;--green:#00d4aa;
+    --font:'Sarabun','IBM Plex Sans Thai',sans-serif;
+    --mono:'IBM Plex Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.7;overflow-x:hidden}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.4}
+  body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(79,124,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(79,124,255,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+  .orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px);opacity:0.12}
+  .orb-1{width:600px;height:600px;background:var(--accent2);top:-200px;left:-150px}
+  .orb-2{width:400px;height:400px;background:var(--accent);bottom:10%;right:-100px}
+  .orb-3{width:300px;height:300px;background:var(--accent3);top:50%;left:40%}
+  .container{max-width:900px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+  nav{position:sticky;top:0;z-index:100;background:rgba(10,15,30,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 0}
+  .nav-inner{max-width:900px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .nav-logo{font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:0.08em;display:flex;align-items:center;gap:8px}
+  .nav-logo::before{content:'⬡';font-size:16px;color:var(--accent2)}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-tag{font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:0.06em;background:var(--bg3);border:1px solid var(--border);padding:3px 10px;border-radius:20px}
+
+  .lang-toggle{display:flex;background:var(--bg3);border:1px solid var(--border);border-radius:8px;overflow:hidden;flex-shrink:0}
+  .lang-btn{padding:6px 14px;font-family:var(--mono);font-size:12px;cursor:pointer;border:none;background:transparent;color:var(--text3);transition:background 0.15s,color 0.15s;letter-spacing:0.04em;font-weight:500}
+  .lang-btn.active{background:var(--accent);color:#fff}
+  .lang-btn:hover:not(.active){color:var(--text)}
+
+  .hero{padding:80px 0 60px;text-align:center}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--accent3);letter-spacing:0.12em;text-transform:uppercase;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);padding:5px 14px;border-radius:20px;margin-bottom:28px}
+  .hero-eyebrow::before{content:'●';font-size:8px;animation:blink 1.5s infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+  .hero h1{font-size:clamp(28px,5vw,48px);font-weight:600;line-height:1.15;margin-bottom:16px;letter-spacing:-0.02em;background:linear-gradient(135deg,#fff 30%,#9aa5c4 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero-sub{font-size:16px;color:var(--text2);max-width:520px;margin:0 auto 40px;font-weight:300}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:48px}
+  .meta-pill{display:flex;align-items:center;gap:7px;background:var(--bg3);border:1px solid var(--border);padding:8px 16px;border-radius:8px;font-size:13px;color:var(--text2)}
+  .meta-pill .icon{font-size:16px}
+  .meta-pill strong{color:var(--text);font-weight:500}
+  .btn-cta{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%);color:white;padding:14px 32px;border-radius:10px;font-size:15px;font-weight:500;text-decoration:none;border:none;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;box-shadow:0 0 30px rgba(79,124,255,0.25);position:relative;z-index:1}
+  .btn-cta:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(79,124,255,0.4)}
+  .btn-cta svg{width:18px;height:18px}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);margin:48px 0}
+  .section-label{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .section-label::before{content:'//';color:var(--text3)}
+  .section-title{font-size:22px;font-weight:600;color:var(--text);margin-bottom:24px;letter-spacing:-0.01em}
+
+  .topics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:48px}
+  .topic-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:border-color 0.2s,transform 0.2s;position:relative;overflow:hidden;cursor:pointer}
+  .topic-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:0;transition:opacity 0.2s}
+  .topic-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+  .topic-card:hover::before{opacity:1}
+  .topic-num{font-family:var(--mono);font-size:11px;color:var(--accent);background:rgba(79,124,255,0.1);border:1px solid rgba(79,124,255,0.2);padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:10px}
+  .topic-card h3{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4}
+  .topic-card p{font-size:13px;color:var(--text2);line-height:1.6}
+  .card-footer{display:flex;align-items:center;gap:5px;margin-top:12px;font-size:12px;color:var(--accent);font-family:var(--mono);opacity:0;transition:opacity 0.2s}
+  .topic-card:hover .card-footer{opacity:1}
+  .card-footer svg{width:13px;height:13px}
+
+  .rules-section{margin-bottom:48px}
+  .rule-group{margin-bottom:12px}
+  .rule-header{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;cursor:pointer;transition:border-color 0.2s,background 0.2s;user-select:none}
+  .rule-header:hover{border-color:var(--border2);background:var(--bg3)}
+  .rule-header.open{border-color:var(--border2);border-bottom-left-radius:0;border-bottom-right-radius:0}
+  .rule-header-left{display:flex;align-items:center;gap:12px}
+  .rule-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+  .rule-title{font-size:14px;font-weight:500;color:var(--text)}
+  .rule-title-en{font-size:12px;color:var(--text3);font-weight:400;margin-top:1px}
+  .rule-chevron{width:20px;height:20px;color:var(--text3);transition:transform 0.25s;flex-shrink:0}
+  .rule-header.open .rule-chevron{transform:rotate(180deg)}
+  .rule-body{display:none;background:var(--bg2);border:1px solid var(--border2);border-top:none;border-bottom-left-radius:10px;border-bottom-right-radius:10px;padding:20px}
+  .rule-body.open{display:block}
+  .rule-items{list-style:none}
+  .rule-items li{display:flex;gap:10px;padding:8px 0;font-size:13px;color:var(--text2);border-bottom:1px solid var(--border);line-height:1.6}
+  .rule-items li:last-child{border-bottom:none}
+  .rule-items li::before{content:'—';color:var(--accent);flex-shrink:0;margin-top:1px;font-family:var(--mono)}
+  .rule-items li strong{color:var(--text);font-weight:500}
+  .alert{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin-bottom:14px;border:1px solid;font-size:13px}
+  .alert-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+  .alert-red{background:rgba(255,92,114,0.07);border-color:rgba(255,92,114,0.25);color:#ffa0af}
+  .alert-amber{background:rgba(255,184,77,0.07);border-color:rgba(255,184,77,0.25);color:#ffd080}
+  .alert-green{background:rgba(0,212,170,0.07);border-color:rgba(0,212,170,0.25);color:#80e8d5}
+  .pw-rules{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:16px}
+  .pw-rule-row{display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid var(--border);font-size:13px}
+  .pw-rule-row:last-child{border-bottom:none}
+  .pw-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .pw-dot.red{background:var(--red)}
+  .pw-dot.green{background:var(--green)}
+  .pw-rule-row .label{color:var(--text2);flex:1}
+  .pw-rule-row .val{font-family:var(--mono);font-size:12px;color:var(--text);background:var(--bg3);padding:3px 10px;border-radius:5px}
+  .steps{margin-bottom:24px}
+  .step{display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--border)}
+  .step:last-child{border-bottom:none}
+  .step-num{width:28px;height:28px;border-radius:50%;background:rgba(79,124,255,0.12);border:1px solid rgba(79,124,255,0.3);color:var(--accent);font-family:var(--mono);font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+  .step-text{font-size:13px;color:var(--text2);line-height:1.6}
+  .step-text strong{color:var(--text);font-weight:500}
+
+  .cta-section{background:linear-gradient(135deg,rgba(79,124,255,0.08),rgba(124,92,252,0.08));border:1px solid var(--border2);border-radius:16px;padding:40px;text-align:center;margin-bottom:64px;position:relative;overflow:hidden}
+  .cta-section::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(79,124,255,0.1),transparent 70%);pointer-events:none}
+  .cta-section h2{font-size:24px;font-weight:600;margin-bottom:10px;background:linear-gradient(135deg,#fff 40%,#9aa5c4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .cta-section p{color:var(--text2);font-size:14px;margin-bottom:28px}
+  .qr-frame{display:inline-block;background:white;padding:14px;border-radius:12px;margin-bottom:20px}
+  .qr-frame img{display:block;width:140px;height:140px}
+  #qr-canvas{display:block;line-height:0}
+  .or-divider{display:flex;align-items:center;gap:12px;color:var(--text3);font-size:12px;margin:20px auto;max-width:320px}
+  .or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+  .link-box{display:flex;gap:8px;max-width:480px;margin:0 auto}
+  .link-input{flex:1;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--text2);font-family:var(--mono);outline:none}
+  .link-input:focus{border-color:var(--accent)}
+  .copy-btn{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:10px 16px;font-size:13px;color:var(--text);cursor:pointer;transition:background 0.15s;white-space:nowrap}
+  .copy-btn:hover{background:rgba(79,124,255,0.15);border-color:var(--accent)}
+
+  footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
+  .footer-inner{max-width:900px;margin:0 auto;padding:0 24px}
+  .footer-inner p{font-size:13px;color:var(--text3)}
+  .footer-inner span{color:var(--accent);font-family:var(--mono)}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  .fade-up{animation:fadeUp 0.5s ease both}
+  .fade-up:nth-child(2){animation-delay:0.1s}
+  .fade-up:nth-child(3){animation-delay:0.2s}
+  .fade-up:nth-child(4){animation-delay:0.3s}
+
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,8,20,0.85);backdrop-filter:blur(8px);z-index:200;align-items:center;justify-content:center;padding:20px}
+  .modal-overlay.active{display:flex}
+  .modal-box{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;width:100%;max-width:620px;max-height:85vh;overflow:hidden;display:flex;flex-direction:column;animation:modalIn 0.2s ease both}
+  @keyframes modalIn{from{opacity:0;transform:scale(0.96) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+  .modal-header{display:flex;align-items:flex-start;justify-content:space-between;padding:22px 24px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
+  .modal-header-left{display:flex;align-items:center;gap:12px}
+  .modal-num{font-family:var(--mono);font-size:11px;color:var(--accent);background:rgba(79,124,255,0.12);border:1px solid rgba(79,124,255,0.25);padding:3px 9px;border-radius:5px;flex-shrink:0}
+  .modal-title{font-size:16px;font-weight:600;color:var(--text);line-height:1.3}
+  .modal-title-sub{font-size:13px;color:var(--text3);margin-top:2px}
+  .modal-close{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.15s,border-color 0.15s;font-size:16px;line-height:1}
+  .modal-close:hover{background:rgba(255,92,114,0.12);border-color:rgba(255,92,114,0.3);color:var(--red)}
+  .modal-body{overflow-y:auto;padding:22px 24px;flex:1}
+  .modal-body::-webkit-scrollbar{width:5px}
+  .modal-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+  .modal-section-title{font-size:11px;font-family:var(--mono);color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;margin-top:20px}
+  .modal-section-title:first-child{margin-top:0}
+  .modal-list{list-style:none;margin-bottom:4px}
+  .modal-list li{display:flex;gap:10px;padding:9px 0;font-size:13px;color:var(--text2);border-bottom:1px solid var(--border);line-height:1.65}
+  .modal-list li:last-child{border-bottom:none}
+  .modal-list li::before{content:'›';color:var(--accent);font-size:15px;flex-shrink:0;margin-top:-1px}
+  .modal-list li strong{color:var(--text);font-weight:500}
+  .tag-red{display:inline-block;background:rgba(255,92,114,0.1);color:#ff8fa0;font-size:11px;padding:1px 7px;border-radius:4px;margin-left:4px;font-family:var(--mono)}
+  .tag-green{display:inline-block;background:rgba(0,212,170,0.1);color:#60e8d0;font-size:11px;padding:1px 7px;border-radius:4px;margin-left:4px;font-family:var(--mono)}
+  .m-alert{display:flex;gap:12px;padding:13px 16px;border-radius:8px;margin-bottom:12px;border:1px solid;font-size:13px;line-height:1.6}
+  .m-alert-icon{font-size:16px;flex-shrink:0}
+  .m-alert.red{background:rgba(255,92,114,0.07);border-color:rgba(255,92,114,0.25);color:#ffa0af}
+  .m-alert.amber{background:rgba(255,184,77,0.07);border-color:rgba(255,184,77,0.25);color:#ffd080}
+  .m-alert.green{background:rgba(0,212,170,0.07);border-color:rgba(0,212,170,0.25);color:#80e8d5}
+  .m-alert.blue{background:rgba(79,124,255,0.07);border-color:rgba(79,124,255,0.25);color:#90b0ff}
+  .pw-table{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:12px}
+  .pw-row{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--border);font-size:13px}
+  .pw-row:last-child{border-bottom:none}
+  .pw-dot2{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+  .pw-dot2.g{background:var(--green)}
+  .pw-dot2.r{background:var(--red)}
+  .pw-row .lbl{color:var(--text2);flex:1}
+  .pw-row .vl{font-family:var(--mono);font-size:11px;color:var(--text);background:var(--bg3);padding:2px 8px;border-radius:4px}
+
+  /* ORG CHART */
+  .org-wrap{overflow-x:auto;margin:16px 0 4px;padding-bottom:8px}
+  .org-chart{display:flex;flex-direction:column;align-items:center;min-width:460px}
+  .org-line{width:2px;height:24px;background:rgba(79,124,255,0.45);margin:0 auto}
+  .org-box{border-radius:8px;padding:9px 18px;font-size:12px;text-align:center;position:relative;min-width:210px;max-width:280px}
+  .org-role{font-family:var(--mono);font-size:10px;letter-spacing:0.06em;margin-bottom:2px}
+  .org-name{font-size:13px;font-weight:600}
+  .org-box.mgmt{background:rgba(79,124,255,0.1);border:1px solid rgba(79,124,255,0.4)}
+  .org-box.mgmt .org-role{color:var(--accent)}
+  .org-box.mgmt .org-name{color:var(--text)}
+  .org-box.it{background:rgba(124,92,252,0.1);border:1px solid rgba(124,92,252,0.4)}
+  .org-box.it .org-role{color:#a57cff}
+  .org-box.it .org-name{color:var(--text)}
+  .org-box.user{background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.4)}
+  .org-box.user .org-role{color:var(--accent3)}
+  .org-box.user .org-name{color:var(--accent3)}
+  .org-row{display:flex;justify-content:center;gap:16px;position:relative;padding-top:24px}
+  .org-row::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:2px;height:24px;background:rgba(79,124,255,0.45)}
+  .org-hline{position:absolute;top:0;height:2px;background:rgba(79,124,255,0.45)}
+  .org-col{display:flex;flex-direction:column;align-items:center}
+  .org-col-line{width:2px;height:24px;background:rgba(79,124,255,0.45);margin:0 auto}
+  .org-merge{display:flex;justify-content:center;gap:16px;position:relative;padding-top:24px;margin-top:0}
+  .org-merge::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:2px;height:24px;background:rgba(79,124,255,0.45)}
+  .org-connector{position:relative;width:100%}
+
+  @media(max-width:600px){
+    .hero{padding:60px 0 40px}
+    .cta-section{padding:28px 20px}
+    .link-box{flex-direction:column}
+    .topics-grid{grid-template-columns:1fr}
+    .nav-tag{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">TCP-R IT SECURITY</div>
+    <div class="nav-right">
+      <div class="nav-tag" id="nav-tag">Annual Training 2025</div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('th')" id="btn-th">TH</button>
+        <button class="lang-btn" onclick="setLang('en')" id="btn-en">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="hero">
+    <div class="hero-eyebrow fade-up" id="hero-eyebrow">Mandatory for all employees</div>
+    <h1 class="fade-up" id="hero-title">IT Security Training<br>ประจำปี 2025</h1>
+    <p class="hero-sub fade-up" id="hero-sub">การอบรมความปลอดภัยด้านไอทีสำหรับพนักงานทุกท่าน<br>กรุณาอ่านและทำแบบทดสอบให้ครบภายในกำหนด</p>
+    <div class="meta-row fade-up">
+      <div class="meta-pill"><span class="icon">📅</span><strong id="lbl-deadline">กำหนดส่ง:</strong><span id="val-deadline">ภายใน 31 พ.ค. 2025</span></div>
+      <div class="meta-pill"><span class="icon">⏱</span><strong id="lbl-duration">เวลา:</strong><span id="val-duration">~20 นาที</span></div>
+      <div class="meta-pill"><span class="icon">👥</span><strong id="lbl-audience">กลุ่มเป้าหมาย:</strong><span id="val-audience">พนักงานทุกคน</span></div>
+      <div class="meta-pill"><span class="icon">📋</span><strong id="lbl-format">รูปแบบ:</strong><span id="val-format">แบบทดสอบออนไลน์</span></div>
+    </div>
+    <a href="#test" class="btn-cta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <span id="lbl-goto">ไปที่แบบทดสอบ</span>
+    </a>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label" id="lbl-section-overview">Overview</div>
+  <div class="section-title" id="lbl-section-overview-title">หัวข้อการอบรมทั้งหมด 9 หัวข้อ</div>
+  <div class="topics-grid" id="topics-grid"></div>
+
+  <div class="divider"></div>
+
+  <div class="rules-section">
+    <div class="section-label" id="lbl-section-detail">Details</div>
+    <div class="section-title" id="lbl-section-detail-title">สรุปกฎสำคัญที่ต้องทราบ</div>
+    <div id="accordion-wrap"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="cta-section" id="test">
+    <h2 id="lbl-cta-title">พร้อมทำแบบทดสอบแล้วหรือยัง?</h2>
+    <p id="lbl-cta-sub">สแกน QR Code หรือคลิกลิงก์ด้านล่างเพื่อเข้าทำแบบทดสอบ Microsoft Forms</p>
+    <div class="qr-frame"><div id="qr-canvas"></div></div>
+    <div>
+      <a href="#" class="btn-cta" onclick="openForm(event)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span id="lbl-cta-btn">เริ่มทำแบบทดสอบ</span>
+      </a>
+    </div>
+    <div class="or-divider" id="lbl-or">หรือคัดลอกลิงก์</div>
+    <div class="link-box">
+      <input id="form-url-display" class="link-input" type="text" readonly value="https://forms.cloud.microsoft/r/bUQnGwj64w">
+      <button class="copy-btn" onclick="copyUrl()" id="lbl-copy">📋 คัดลอก</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <p id="lbl-footer">จัดทำโดย <span>แผนกเทคโนโลยีสารสนเทศ (IT Department)</span> — TCP-R Group</p>
+    <p style="margin-top:6px" id="lbl-footer2">สอบถามเพิ่มเติม: IT Request <span>http://tcpr-intranet</span></p>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-num" id="modal-num">01</div>
+        <div>
+          <div class="modal-title" id="modal-title"></div>
+          <div class="modal-title-sub" id="modal-title-sub"></div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+const FORM_URL = 'https://forms.cloud.microsoft/r/bUQnGwj64w';
+let lang = 'th';
+
+const TR = {
+  th:{
+    eyebrow:'Mandatory for all employees',
+    heroTitle:'IT Security Training<br>ประจำปี 2025',
+    heroSub:'การอบรมความปลอดภัยด้านไอทีสำหรับพนักงานทุกท่าน<br>กรุณาอ่านและทำแบบทดสอบให้ครบภายในกำหนด',
+    lblDeadline:'กำหนดส่ง:',valDeadline:'ภายใน 31 พ.ค. 2025',
+    lblDuration:'เวลา:',valDuration:'~20 นาที',
+    lblAudience:'กลุ่มเป้าหมาย:',valAudience:'พนักงานทุกคน',
+    lblFormat:'รูปแบบ:',valFormat:'แบบทดสอบออนไลน์',
+    lblGoto:'ไปที่แบบทดสอบ',
+    lblSectionOv:'Overview',lblSectionOvTitle:'หัวข้อการอบรมทั้งหมด 13 หัวข้อ',
+    lblSectionDt:'Details',lblSectionDtTitle:'สรุปกฎสำคัญที่ต้องทราบ',
+    ctaTitle:'พร้อมทำแบบทดสอบแล้วหรือยัง?',
+    ctaSub:'สแกน QR Code หรือคลิกลิงก์ด้านล่างเพื่อเข้าทำแบบทดสอบ Microsoft Forms',
+    ctaBtn:'เริ่มทำแบบทดสอบ',orDiv:'หรือคัดลอกลิงก์',
+    copyBtn:'📋 คัดลอก',copyDone:'✅ คัดลอกแล้ว!',
+    footer:'จัดทำโดย <span>แผนกเทคโนโลยีสารสนเทศ (IT Department)</span> — TCP-R Group',
+    footer2:'สอบถามเพิ่มเติม: IT Request <span>http://tcpr-intranet</span>',
+    seeMore:'ดูรายละเอียด'
+  },
+  en:{
+    eyebrow:'Mandatory for all employees',
+    heroTitle:'IT Security Training<br>Year 2025',
+    heroSub:'Annual IT Security Training for all TCP-R employees.<br>Please read all topics and complete the test before the deadline.',
+    lblDeadline:'Deadline:',valDeadline:'By 31 May 2025',
+    lblDuration:'Duration:',valDuration:'~20 minutes',
+    lblAudience:'Audience:',valAudience:'All employees',
+    lblFormat:'Format:',valFormat:'Online test',
+    lblGoto:'Go to Test',
+    lblSectionOv:'Overview',lblSectionOvTitle:'13 Training Topics',
+    lblSectionDt:'Details',lblSectionDtTitle:'Key Rules Summary',
+    ctaTitle:'Ready to take the test?',
+    ctaSub:'Scan the QR Code or click the link below to access the Microsoft Forms test.',
+    ctaBtn:'Start the Test',orDiv:'or copy link',
+    copyBtn:'📋 Copy',copyDone:'✅ Copied!',
+    footer:'Published by <span>Information Technology Department</span> — TCP-R Group',
+    footer2:'Contact: IT Request <span>http://tcpr-intranet</span>',
+    seeMore:'See details'
+  }
+};
+
+const TOPICS = [
+  { num:'01', th:{title:'IT Security Management',desc:'การจัดการความปลอดภัยด้านไอทีและแผนภาพโครงสร้างการดำเนินงาน (MD → DMD → EDGM → ITM → IT Teams → End User)'}, en:{title:'IT Security Management',desc:'IT security management structure and org chart from MD down to IT Teams and all End Users.'} },
+  { num:'02', th:{title:'Information System Usage Rules',desc:'กฎการใช้ระบบสารสนเทศ การสำรองข้อมูล และการจัดการข้อมูลสำคัญ'}, en:{title:'Information System Usage Rules',desc:'Rules for information systems, data backup, and critical data management.'} },
+  { num:'03', th:{title:'Equipment Usage Rules',desc:'กฎการใช้คอมพิวเตอร์ อุปกรณ์มือถือ และสื่อบันทึกข้อมูล'}, en:{title:'Equipment Usage Rules',desc:'Rules for computers, mobile devices, and storage media usage.'} },
+  { num:'04', th:{title:'Password Management',desc:'การจัดการ User ID และรหัสผ่านอย่างปลอดภัยตามมาตรฐานบริษัท'}, en:{title:'Password Management',desc:'Secure management of User IDs and passwords per company standards.'} },
+  { num:'05', th:{title:'Email Usage Rules',desc:'กฎการใช้อีเมลและการรับมือกับอีเมลที่น่าสงสัย (Phishing)'}, en:{title:'Email Usage Rules',desc:'Email usage rules and handling suspicious emails (Phishing).'} },
+  { num:'06', th:{title:'Internet Usage Rules',desc:'กฎการใช้อินเทอร์เน็ต Cloud สาธารณะ และ WiFi สาธารณะ'}, en:{title:'Internet Usage Rules',desc:'Rules for internet, public cloud services, and public WiFi usage.'} },
+  { num:'07', th:{title:'Virus Prevention',desc:'มาตรการป้องกันไวรัสและการอัปเดต Antivirus Software'}, en:{title:'Virus Prevention',desc:'Virus prevention measures and keeping antivirus software current.'} },
+  { num:'08', th:{title:'Legal Compliance',desc:'การปฏิบัติตามข้อกำหนดทางกฎหมาย ลิขสิทธิ์ซอฟต์แวร์ และการส่งหลักฐาน'}, en:{title:'Legal Compliance',desc:'Software licensing, legal requirements, and evidence submission.'} },
+  { num:'09', th:{title:'Employee Training Requirements',desc:'ข้อกำหนดการอบรมสำหรับพนักงานทุกคน พนักงานใหม่ และความร่วมมือฉุกเฉิน'}, en:{title:'Employee Training Requirements',desc:'Mandatory annual training for all staff, new hires, and emergency cooperation.'} },
+  { num:'10', th:{title:'AI Usage Policy',desc:'กฎการใช้ AI (ChatGPT, Gemini, Copilot ฯลฯ) ในการทำงาน เพื่อป้องกันข้อมูลบริษัทรั่วไหล'}, en:{title:'AI Usage Policy',desc:'Rules for using AI tools (ChatGPT, Gemini, Copilot, etc.) to prevent company data leakage.'} },
+  { num:'11', th:{title:'Deepfake & Social Engineering',desc:'การรับมือการหลอกลวงด้วย Deepfake เสียง/วิดีโอปลอม และการโจมตีแบบ Social Engineering'}, en:{title:'Deepfake & Social Engineering',desc:'How to detect and respond to voice/video Deepfakes and advanced social engineering attacks.'} },
+  { num:'12', th:{title:'Work From Home Security',desc:'ความปลอดภัยเมื่อทำงานจากบ้านหรือคาเฟ่ ที่มีความเสี่ยงแตกต่างจากในออฟฟิศ'}, en:{title:'Work From Home Security',desc:'Security practices when working remotely from home, cafés, or other public locations.'} },
+  { num:'13', th:{title:'PDPA & Personal Data Protection',desc:'การคุ้มครองข้อมูลส่วนบุคคลตามกฎหมาย PDPA และหน้าที่ของพนักงานที่ต้องปฏิบัติตาม'}, en:{title:'PDPA & Personal Data Protection',desc:'Personal data protection under Thai PDPA law and employee obligations for compliance.'} }
+];
+
+const ACCORDIONS = [
+  { icon:'🚫', bg:'rgba(255,92,114,0.1)',
+    th:{title:'ข้อห้ามด้านอุปกรณ์และเครือข่าย',sub:'Device & Network Restrictions'},
+    en:{title:'Device & Network Restrictions',sub:'อุปกรณ์และเครือข่าย'},
+    th_body:`<div class="alert alert-red"><div class="alert-icon">⛔</div><div>ห้ามใช้อุปกรณ์ IT ส่วนตัวเชื่อมต่อเข้ากับ <strong>ระบบโดเมนของบริษัท</strong> โดยเด็ดขาด</div></div><ul class="rule-items"><li>PC/Server ที่เชื่อมต่อ TCPR Network ต้องไม่เชื่อมต่อ Network อื่นโดยไม่ได้รับอนุมัติจาก IT</li><li>Remote Access ต้องผ่าน <strong>VPN Gateway</strong> เท่านั้น และ Admin เป็นผู้ติดตั้ง</li><li>อุปกรณ์มือถือเชื่อมต่อระบบภายในได้เฉพาะ <strong>อีเมลเท่านั้น</strong></li><li>ห้ามใช้อุปกรณ์บริษัทเชื่อมต่อ <strong>Public WiFi</strong> โดยเด็ดขาด</li><li>อุปกรณ์ IT ของบริษัทใช้ได้เพื่อ <strong>ธุรกิจเท่านั้น</strong></li></ul>`,
+    en_body:`<div class="alert alert-red"><div class="alert-icon">⛔</div><div>Personal IT devices are <strong>strictly prohibited</strong> from connecting to the company's domain system.</div></div><ul class="rule-items"><li>PCs/servers on the TCPR Network must not connect to any other network without IT approval.</li><li>Remote access must use <strong>VPN Gateway only</strong>, installed by the system administrator.</li><li>Mobile devices may only connect to internal systems for <strong>email access</strong>.</li><li>Company devices must <strong>never connect to public WiFi</strong>.</li><li>Company IT equipment must be used for <strong>business purposes only</strong>.</li></ul>`
+  },
+  { icon:'💾', bg:'rgba(79,124,255,0.1)',
+    th:{title:'การจัดการข้อมูลและการสำรองข้อมูล',sub:'Data Management & Backup'},
+    en:{title:'Data Management & Backup',sub:'การจัดการข้อมูล'},
+    th_body:`<div class="alert alert-green"><div class="alert-icon">✅</div><div>สำรองข้อมูล <strong>อัตโนมัติทุกวัน</strong> เก็บไว้ 31 วัน และ Backup เทปทุกสิ้นเดือน</div></div><ul class="rule-items"><li>จัดเก็บข้อมูลสำคัญไว้ใน <strong>File Server</strong> เท่านั้น</li><li>กู้คืนข้อมูลผ่าน IT Request ที่ <strong>http://tcpr-intranet</strong></li><li>ส่งไฟล์สำคัญออกนอกต้องทำการ <strong>Encryption (17-C-008)</strong></li><li>นำข้อมูลออกนอกสำนักงานต้องได้รับอนุญาตจาก <strong>ผู้ดูแลข้อมูลก่อน</strong></li><li>เมื่อไม่ต้องการสิทธิ์แล้วต้อง <strong>คืนสิทธิ์ทันที</strong></li></ul>`,
+    en_body:`<div class="alert alert-green"><div class="alert-icon">✅</div><div>Automatic daily backups, retained <strong>31 days</strong>, with monthly tape backups.</div></div><ul class="rule-items"><li>Always store important data on the <strong>File Server</strong>.</li><li>Request data recovery via IT Request at <strong>http://tcpr-intranet</strong>.</li><li>Sending important files externally requires <strong>Encryption (17-C-008)</strong>.</li><li>Taking data out of the office requires <strong>prior approval from the data custodian</strong>.</li><li>When access rights are no longer needed, <strong>return them immediately</strong>.</li></ul>`
+  },
+  { icon:'💻', bg:'rgba(124,92,252,0.1)',
+    th:{title:'กฎการใช้คอมพิวเตอร์ส่วนบุคคล',sub:'Personal Computer Usage Rules'},
+    en:{title:'Personal Computer Usage Rules',sub:'กฎการใช้คอมพิวเตอร์'},
+    th_body:`<div class="steps"><div class="step"><div class="step-num">a</div><div class="step-text"><strong>ล็อกหน้าจอ</strong> ทุกครั้งที่ลุกออกจากที่นั่ง และปิดเครื่องเมื่อเลิกงาน</div></div><div class="step"><div class="step-num">b</div><div class="step-text"><strong>เข้ารหัส Hard Disk</strong> ของ PC ที่ใช้งานนอกสำนักงาน</div></div><div class="step"><div class="step-num">c</div><div class="step-text">เก็บ Laptop ในที่มีล็อค หรือใช้ <strong>โซ่ล็อค</strong> ป้องกัน</div></div><div class="step"><div class="step-num">d</div><div class="step-text">อย่าทิ้ง PC ไว้โดยไม่มีคนดูแลเมื่อ <strong>นำออกนอกสำนักงาน</strong></div></div><div class="step"><div class="step-num">e</div><div class="step-text">การย้ายหรือทิ้ง PC ต้องแจ้ง <strong>IT Asset Manager ก่อน</strong></div></div><div class="step"><div class="step-num">f</div><div class="step-text">สื่อบันทึกข้อมูลควบคุมผ่านโปรแกรม <strong>IP Guard</strong> ที่ติดตั้งทุกเครื่อง</div></div></div>`,
+    en_body:`<div class="steps"><div class="step"><div class="step-num">a</div><div class="step-text"><strong>Lock your screen</strong> whenever you leave your seat, and shut down when leaving work.</div></div><div class="step"><div class="step-num">b</div><div class="step-text"><strong>Encrypt the hard disk</strong> of any PC used outside the office.</div></div><div class="step"><div class="step-num">c</div><div class="step-text">Store laptops in locked locations or secure with a <strong>cable lock</strong>.</div></div><div class="step"><div class="step-num">d</div><div class="step-text">Never leave your PC unattended when <strong>taken outside the office</strong>.</div></div><div class="step"><div class="step-num">e</div><div class="step-text">Notify the <strong>IT Asset Manager before</strong> relocating or disposing of any PC.</div></div><div class="step"><div class="step-num">f</div><div class="step-text">Storage media is controlled by <strong>IP Guard</strong> installed on all company computers.</div></div></div>`
+  },
+  { icon:'🔐', bg:'rgba(255,184,77,0.1)',
+    th:{title:'กฎการจัดการรหัสผ่าน',sub:'Password Management Rules'},
+    en:{title:'Password Management Rules',sub:'การจัดการรหัสผ่าน'},
+    th_body:`<div class="pw-rules"><div class="pw-rule-row"><div class="pw-dot green"></div><div class="label">ความยาวรหัสผ่านขั้นต่ำ</div><div class="val">16 ตัวอักษร</div></div><div class="pw-rule-row"><div class="pw-dot green"></div><div class="label">ต้องประกอบด้วย</div><div class="val">A-Z, a-z, 0-9, !@#$</div></div><div class="pw-rule-row"><div class="pw-dot red"></div><div class="label">ห้ามใช้รหัสเดิมย้อนหลัง</div><div class="val">4 ครั้งล่าสุด</div></div><div class="pw-rule-row"><div class="pw-dot red"></div><div class="label">ห้ามบันทึกในเบราว์เซอร์</div><div class="val">ทุกกรณี</div></div><div class="pw-rule-row"><div class="pw-dot red"></div><div class="label">ห้ามแชร์รหัสผ่าน</div><div class="val">ทุกกรณี</div></div></div><div class="alert alert-amber"><div class="alert-icon">⚠️</div><div>รหัสผ่านเริ่มต้นที่ได้รับจาก Admin <strong>ต้องเปลี่ยนทันที</strong></div></div>`,
+    en_body:`<div class="pw-rules"><div class="pw-rule-row"><div class="pw-dot green"></div><div class="label">Minimum length</div><div class="val">16 characters</div></div><div class="pw-rule-row"><div class="pw-dot green"></div><div class="label">Must include</div><div class="val">A-Z, a-z, 0-9, !@#$</div></div><div class="pw-rule-row"><div class="pw-dot red"></div><div class="label">Cannot reuse previous</div><div class="val">Last 4 passwords</div></div><div class="pw-rule-row"><div class="pw-dot red"></div><div class="label">Do not save in browser</div><div class="val">Never</div></div><div class="pw-rule-row"><div class="pw-dot red"></div><div class="label">Do not share password</div><div class="val">Never</div></div></div><div class="alert alert-amber"><div class="alert-icon">⚠️</div><div>Initial passwords from Admin <strong>must be changed immediately</strong> upon receipt.</div></div>`
+  },
+  { icon:'📧', bg:'rgba(0,212,170,0.1)',
+    th:{title:'กฎการใช้อีเมลและอินเทอร์เน็ต',sub:'Email & Internet Usage Rules'},
+    en:{title:'Email & Internet Usage Rules',sub:'อีเมลและอินเทอร์เน็ต'},
+    th_body:`<div class="alert alert-red"><div class="alert-icon">🎣</div><div>หากได้รับ <strong>อีเมลน่าสงสัย</strong> ห้ามเปิด Attachment หรือคลิก URL และแจ้ง Admin ทันที</div></div><ul class="rule-items"><li>ใช้อีเมลที่กำหนดโดย IT เท่านั้น <strong>ห้ามใช้อีเมลส่วนตัวสำหรับงาน</strong></li><li>ตรวจสอบ Email Address ของผู้รับก่อนส่งทุกครั้ง</li><li>ห้าม Forward อีเมลอัตโนมัติไปยังนอก <strong>@tcp.co.th</strong></li><li>ใช้ Cloud สาธารณะที่ IT อนุมัติเท่านั้น ห้ามโพสต์ข้อมูลธุรกิจบน Cloud ที่ไม่มีการควบคุมผู้เข้าถึง</li></ul>`,
+    en_body:`<div class="alert alert-red"><div class="alert-icon">🎣</div><div>If you receive a <strong>suspicious email</strong>, do not open attachments or click URLs — notify Admin immediately.</div></div><ul class="rule-items"><li>Use only IT-approved email. <strong>Do not use personal email for work.</strong></li><li>Always verify the recipient's email address before sending.</li><li>Do not auto-forward emails outside <strong>@tcp.co.th</strong>.</li><li>Use only IT-approved cloud services. Do not post business data on uncontrolled public clouds.</li></ul>`
+  },
+  { icon:'🚨', bg:'rgba(255,92,114,0.1)',
+    th:{title:'การรายงานเหตุการณ์ด้านความปลอดภัย',sub:'Security Incident Reporting'},
+    en:{title:'Security Incident Reporting',sub:'การรายงานเหตุการณ์'},
+    th_body:`<div class="alert alert-red"><div class="alert-icon">🆘</div><div>หาก PC หรือสื่อจัดเก็บข้อมูล <strong>สูญหาย/ถูกขโมย</strong> หรือพบไวรัส ให้แจ้ง Admin <strong>ทันที</strong></div></div><ul class="rule-items"><li>ติดตั้ง Antivirus ที่ IT กำหนด และ <strong>อัปเดต Patch สม่ำเสมอ</strong></li><li>ซอฟต์แวร์ทุกตัวต้องมีลิขสิทธิ์ถูกต้อง การติดตั้ง/ถอดถอนต้องยื่น <strong>IT Request</strong></li><li>กิจกรรมทั้งหมดบน PC ถูกบันทึกอัตโนมัติ</li><li>เมื่อมีคำสั่งฉุกเฉินจาก IT ให้ <strong>ร่วมมือและดำเนินการทันที</strong></li></ul>`,
+    en_body:`<div class="alert alert-red"><div class="alert-icon">🆘</div><div>If a PC or storage device is <strong>lost or stolen</strong>, or a virus is detected, notify Admin <strong>immediately</strong>.</div></div><ul class="rule-items"><li>Install IT-specified antivirus and <strong>keep patches up to date</strong>.</li><li>All software must be properly licensed. Install/uninstall requires an <strong>IT Request</strong>.</li><li>All PC activities are automatically logged and may be reviewed.</li><li>When IT issues emergency instructions, <strong>cooperate and act immediately</strong>.</li></ul>`
+  },
+  { icon:'🤖', bg:'rgba(79,124,255,0.12)',
+    th:{title:'กฎการใช้งาน AI ในที่ทำงาน',sub:'AI Usage Policy — ChatGPT / Gemini / Copilot'},
+    en:{title:'AI Usage Policy',sub:'ChatGPT / Gemini / Copilot at Work'},
+    th_body:`<div class="alert alert-red"><div class="alert-icon">⛔</div><div>ห้าม <strong>นำข้อมูลความลับของบริษัท</strong> ป้อนเข้าสู่ AI สาธารณะ เช่น ChatGPT, Gemini, Copilot</div></div>
+    <ul class="rule-items">
+      <li>ห้าม paste ข้อมูลลูกค้า, สัญญา, ข้อมูลการเงิน, รหัสซอฟต์แวร์ภายใน ลงใน AI สาธารณะ <strong>โดยเด็ดขาด</strong></li>
+      <li>ข้อมูลที่ป้อนเข้า AI อาจถูกนำไป <strong>train model</strong> และรั่วไหลสู่บุคคลภายนอกได้</li>
+      <li>การใช้ AI ช่วยงานต้องใช้เฉพาะ <strong>ข้อมูลทั่วไปที่ไม่ใช่ความลับ</strong></li>
+      <li>หากบริษัทมีเครื่องมือ AI ที่อนุมัติแล้ว (เช่น Microsoft Copilot for Work) ให้ใช้เครื่องมือนั้นแทน</li>
+      <li>ปรึกษาแผนก IT ก่อนนำ AI Tool ใหม่มาใช้ในกระบวนการทำงาน</li>
+    </ul>`,
+    en_body:`<div class="alert alert-red"><div class="alert-icon">⛔</div><div>Do <strong>NOT input confidential company data</strong> into public AI tools such as ChatGPT, Gemini, or Copilot.</div></div>
+    <ul class="rule-items">
+      <li>Never paste customer data, contracts, financials, or internal code into public AI tools. <strong>Strictly prohibited.</strong></li>
+      <li>Data entered into AI systems may be used for <strong>model training</strong> and could leak to third parties.</li>
+      <li>AI tools may only be used with <strong>non-confidential, general information</strong>.</li>
+      <li>If the company provides an approved AI tool (e.g. Microsoft Copilot for Work), use that instead.</li>
+      <li>Consult the IT department before adopting any new AI tool into your work process.</li>
+    </ul>`
+  },
+  { icon:'🎭', bg:'rgba(255,184,77,0.12)',
+    th:{title:'Deepfake และ Social Engineering',sub:'การหลอกลวงขั้นสูง — เสียงปลอม / วิดีโอปลอม'},
+    en:{title:'Deepfake & Social Engineering',sub:'Advanced Fraud — Fake Voice / Fake Video'},
+    th_body:`<div class="alert alert-amber"><div class="alert-icon">⚠️</div><div>ผู้โจมตีอาจ <strong>ปลอมเสียงหรือวิดีโอ</strong> ของผู้บริหาร เพื่อสั่งโอนเงินหรือขอข้อมูลสำคัญ</div></div>
+    <ul class="rule-items">
+      <li>หากได้รับคำสั่งโอนเงินหรือขอข้อมูลลับผ่าน <strong>โทรศัพท์หรือวิดีโอคอล</strong> ให้ยืนยันตัวตนผ่านช่องทางที่ 2 เสมอ (เช่น Line, อีเมล, โทรกลับโดยตรง)</li>
+      <li>ระวัง <strong>อีเมลเร่งด่วน</strong> ที่อ้างว่ามาจากผู้บริหาร — Deepfake text ก็มีอยู่จริง</li>
+      <li>ห้ามโอนเงินหรือเปิดเผยข้อมูลบัญชีโดยไม่มีการอนุมัติเป็นลายลักษณ์อักษร</li>
+      <li>สังเกตความผิดปกติของเสียง/วิดีโอ เช่น ริมฝีปากไม่ตรงเสียง, แสงผิดปกติ, เสียงกระตุก</li>
+      <li>แจ้ง IT และผู้จัดการทันทีหากพบเหตุน่าสงสัย</li>
+    </ul>`,
+    en_body:`<div class="alert alert-amber"><div class="alert-icon">⚠️</div><div>Attackers may use <strong>fake voice or video (Deepfake)</strong> of executives to order money transfers or request sensitive data.</div></div>
+    <ul class="rule-items">
+      <li>If you receive a money transfer order or sensitive data request via <strong>phone or video call</strong>, always verify through a second channel (Line, email, or call back directly).</li>
+      <li>Beware of <strong>urgent emails</strong> claiming to be from executives — Deepfake text attacks are real.</li>
+      <li>Never transfer money or disclose account information without <strong>written approval</strong>.</li>
+      <li>Watch for Deepfake signs: lip-sync mismatch, unusual lighting, audio glitches, or unnatural blinking.</li>
+      <li>Report any suspicious incident to IT and your manager immediately.</li>
+    </ul>`
+  },
+  { icon:'🏠', bg:'rgba(0,212,170,0.1)',
+    th:{title:'ความปลอดภัยเมื่อทำงานนอกออฟฟิศ',sub:'Work From Home / Café Security'},
+    en:{title:'Work From Home / Remote Security',sub:'Security outside the office'},
+    th_body:`<div class="alert alert-red"><div class="alert-icon">📶</div><div>ห้ามใช้ <strong>WiFi สาธารณะหรือ WiFi คาเฟ่</strong> กับอุปกรณ์บริษัท โดยไม่เปิด VPN</div></div>
+    <ul class="rule-items">
+      <li>เชื่อมต่อ <strong>VPN</strong> ทุกครั้งที่ทำงานนอกออฟฟิศ ก่อนเข้าถึงระบบบริษัท</li>
+      <li>ไม่ประชุมหรือพูดคุยเรื่องลับในที่สาธารณะที่มีคนอื่นได้ยิน</li>
+      <li>ล็อกหน้าจอเสมอเมื่อลุกออกจากที่นั่ง แม้จะเป็นเวลาสั้นๆ</li>
+      <li>ใช้ <strong>Privacy Screen Filter</strong> กับ Laptop เมื่อทำงานในที่สาธารณะ เพื่อป้องกันคนมองข้างๆ</li>
+      <li>ห้ามพิมพ์เอกสารสำคัญที่เครื่องพิมพ์สาธารณะ (คาเฟ่, ห้องสมุด)</li>
+      <li>ตรวจสอบให้แน่ใจว่า WiFi ที่บ้านใช้ <strong>WPA2/WPA3</strong> และเปลี่ยน Default Password ของ Router แล้ว</li>
+    </ul>`,
+    en_body:`<div class="alert alert-red"><div class="alert-icon">📶</div><div>Never use <strong>public WiFi or café networks</strong> with company devices without enabling VPN.</div></div>
+    <ul class="rule-items">
+      <li>Always connect to <strong>VPN</strong> before accessing company systems when working outside the office.</li>
+      <li>Do not discuss confidential matters in public spaces where others may overhear.</li>
+      <li>Always lock your screen when stepping away, even for a short time.</li>
+      <li>Use a <strong>Privacy Screen Filter</strong> on your laptop in public spaces to prevent visual eavesdropping.</li>
+      <li>Never print sensitive documents on <strong>public printers</strong> (cafés, libraries, etc.).</li>
+      <li>Ensure your home WiFi uses <strong>WPA2/WPA3</strong> encryption and change the default router password.</li>
+    </ul>`
+  },
+  { icon:'🔒', bg:'rgba(0,212,170,0.1)',
+    th:{title:'PDPA และการคุ้มครองข้อมูลส่วนบุคคล',sub:'Personal Data Protection Act (PDPA)'},
+    en:{title:'PDPA & Personal Data Protection',sub:'Thai Personal Data Protection Act'},
+    th_body:`<div class="alert alert-amber"><div class="alert-icon">⚖️</div><div>กฎหมาย <strong>PDPA (พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล)</strong> มีผลบังคับใช้แล้ว — ฝ่าฝืนมีโทษทั้งจำและปรับ</div></div>
+    <ul class="rule-items">
+      <li>ข้อมูลส่วนบุคคล ได้แก่ ชื่อ, ที่อยู่, เบอร์โทร, อีเมล, รูปถ่าย, ข้อมูลสุขภาพ ฯลฯ — ต้องได้รับ <strong>ความยินยอม</strong> ก่อนเก็บและใช้</li>
+      <li>ห้ามแชร์หรือส่งต่อข้อมูลส่วนบุคคลของลูกค้า/พนักงาน โดยไม่ได้รับอนุญาต</li>
+      <li>เก็บข้อมูลส่วนบุคคลเฉพาะที่จำเป็น และลบทิ้งเมื่อหมดความจำเป็น</li>
+      <li>หากข้อมูลส่วนบุคคลรั่วไหล ต้องแจ้ง <strong>ผู้ดูแลระบบและหน่วยงานที่เกี่ยวข้องภายใน 72 ชั่วโมง</strong></li>
+      <li>ห้ามนำข้อมูลส่วนบุคคลออกนอกองค์กรโดยไม่มีมาตรการคุ้มครองที่เพียงพอ</li>
+      <li>ติดต่อ IT หรือ Legal Department หากไม่แน่ใจว่าการกระทำใดละเมิด PDPA</li>
+    </ul>`,
+    en_body:`<div class="alert alert-amber"><div class="alert-icon">⚖️</div><div>Thailand's <strong>Personal Data Protection Act (PDPA)</strong> is in force — violations carry both criminal and civil penalties.</div></div>
+    <ul class="rule-items">
+      <li>Personal data includes: name, address, phone number, email, photos, health data, etc. — you must obtain <strong>consent</strong> before collecting or using it.</li>
+      <li>Do not share or forward personal data of customers or employees without authorization.</li>
+      <li>Collect only the minimum necessary data and delete it when it is no longer needed.</li>
+      <li>If personal data is breached, notify the <strong>system administrator and relevant authorities within 72 hours</strong>.</li>
+      <li>Do not take personal data outside the organization without adequate protection measures.</li>
+      <li>Contact IT or the Legal Department if unsure whether an action violates PDPA.</li>
+    </ul>`
+  }
+];
+
+const MODAL_DATA = {
+  1:{ num:'01', th:{title:'IT Security Management',sub:'การจัดการความปลอดภัยด้านไอทีและโครงสร้างการดำเนินงาน'}, en:{title:'IT Security Management',sub:'Organizational IT Security Structure'},
+    th_body:`<div class="m-alert blue"><div class="m-alert-icon">🏗️</div><div>แผนภาพแสดงสายการรายงานและความรับผิดชอบด้าน IT Security ตั้งแต่ระดับบริหารจนถึงผู้ใช้งาน</div></div>
+    <div class="modal-section-title">แผนภาพโครงสร้างการดำเนินงาน</div>
+    <div class="org-wrap">
+      <div class="org-chart">
+        <div class="org-box mgmt"><div class="org-role">ผู้บริหารสูงสุด</div><div class="org-name">Managing Director (MD)</div></div>
+        <div class="org-line"></div>
+        <div class="org-box mgmt"><div class="org-role">รองผู้อำนวยการ</div><div class="org-name">Deputy Managing Director (DMD)</div></div>
+        <div class="org-line"></div>
+        <div class="org-box mgmt"><div class="org-role">รองผู้จัดการทั่วไปฝ่ายวิศวกรรม</div><div class="org-name">Engineering Deputy General Manager (EDGM)</div></div>
+        <div class="org-line"></div>
+        <div class="org-box mgmt" style="background:rgba(79,124,255,0.18);border-color:rgba(79,124,255,0.6)"><div class="org-role">ผู้จัดการ EM & IT</div><div class="org-name">EM & IT Manager (ITM)</div></div>
+
+        <div style="position:relative;width:100%;padding-top:24px">
+          <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:2px;height:24px;background:rgba(79,124,255,0.45)"></div>
+          <div style="position:absolute;top:24px;left:20%;right:20%;height:2px;background:rgba(79,124,255,0.45)"></div>
+          <div style="display:flex;justify-content:space-between;padding-top:24px;gap:10px">
+            <div class="org-col" style="flex:1">
+              <div style="width:2px;height:0px;background:rgba(124,92,252,0.45);margin:0 auto"></div>
+              <div class="org-box it"><div class="org-role">IT</div><div class="org-name">Software &amp; Cybersecurity</div></div>
+            </div>
+            <div class="org-col" style="flex:1">
+              <div class="org-box it"><div class="org-role">IT</div><div class="org-name">Infrastructure &amp; System</div></div>
+            </div>
+            <div class="org-col" style="flex:1">
+              <div class="org-box it"><div class="org-role">IT</div><div class="org-name">Helpdesk &amp; IT Asset</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="position:relative;width:100%;padding-top:0">
+          <div style="position:absolute;top:0;left:20%;right:20%;height:2px;background:rgba(79,124,255,0.45)"></div>
+          <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:2px;height:24px;background:rgba(79,124,255,0.45)"></div>
+        </div>
+        <div style="height:24px"></div>
+        <div class="org-box user"><div class="org-role">ผู้ใช้งานทั้งหมด</div><div class="org-name">End User — All Person who use our IT asset</div></div>
+      </div>
+    </div>
+    <div class="modal-section-title">สาระสำคัญ</div>
+    <ul class="modal-list">
+      <li>ผู้ดูแลระบบ (ITM) มีหน้าที่กำหนดและบังคับใช้นโยบาย IT Security ทั้งหมด</li>
+      <li>IT แบ่งออกเป็น 3 ทีม: <strong>Software &amp; Cybersecurity</strong>, <strong>Infrastructure &amp; System</strong>, <strong>Helpdesk &amp; IT Asset</strong></li>
+      <li>ทีม IT ทั้ง 3 รับผิดชอบและให้บริการแก่ End User ทุกคนในองค์กร</li>
+      <li>พนักงานทุกคน (End User) ต้องปฏิบัติตามมาตรฐานความปลอดภัยที่กำหนด</li>
+      <li>ผู้จัดการแต่ละระดับต้องดูแลให้ผู้ใต้บังคับบัญชาปฏิบัติตาม IT Security Policy</li>
+    </ul>`,
+    en_body:`<div class="m-alert blue"><div class="m-alert-icon">🏗️</div><div>This diagram shows the IT Security reporting lines and responsibilities from executive level down to end users.</div></div>
+    <div class="modal-section-title">Operational Structure Diagram</div>
+    <div class="org-wrap">
+      <div class="org-chart">
+        <div class="org-box mgmt"><div class="org-role">Top Executive</div><div class="org-name">Managing Director (MD)</div></div>
+        <div class="org-line"></div>
+        <div class="org-box mgmt"><div class="org-role">Deputy Director</div><div class="org-name">Deputy Managing Director (DMD)</div></div>
+        <div class="org-line"></div>
+        <div class="org-box mgmt"><div class="org-role">Engineering Deputy General Manager</div><div class="org-name">Engineering Deputy General Manager (EDGM)</div></div>
+        <div class="org-line"></div>
+        <div class="org-box mgmt" style="background:rgba(79,124,255,0.18);border-color:rgba(79,124,255,0.6)"><div class="org-role">IT Manager</div><div class="org-name">EM & IT Manager (ITM)</div></div>
+
+        <div style="position:relative;width:100%;padding-top:24px">
+          <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:2px;height:24px;background:rgba(79,124,255,0.45)"></div>
+          <div style="position:absolute;top:24px;left:20%;right:20%;height:2px;background:rgba(79,124,255,0.45)"></div>
+          <div style="display:flex;justify-content:space-between;padding-top:24px;gap:10px">
+            <div class="org-col" style="flex:1">
+              <div class="org-box it"><div class="org-role">IT Team</div><div class="org-name">Software &amp; Cybersecurity</div></div>
+            </div>
+            <div class="org-col" style="flex:1">
+              <div class="org-box it"><div class="org-role">IT Team</div><div class="org-name">Infrastructure &amp; System</div></div>
+            </div>
+            <div class="org-col" style="flex:1">
+              <div class="org-box it"><div class="org-role">IT Team</div><div class="org-name">Helpdesk &amp; IT Asset</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="position:relative;width:100%;padding-top:0">
+          <div style="position:absolute;top:0;left:20%;right:20%;height:2px;background:rgba(79,124,255,0.45)"></div>
+          <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:2px;height:24px;background:rgba(79,124,255,0.45)"></div>
+        </div>
+        <div style="height:24px"></div>
+        <div class="org-box user"><div class="org-role">All Users</div><div class="org-name">End User — All Person who use our IT asset</div></div>
+      </div>
+    </div>
+    <div class="modal-section-title">Key Points</div>
+    <ul class="modal-list">
+      <li>The IT Manager (ITM) is responsible for defining and enforcing all IT Security policies.</li>
+      <li>IT is divided into 3 teams: <strong>Software &amp; Cybersecurity</strong>, <strong>Infrastructure &amp; System</strong>, <strong>Helpdesk &amp; IT Asset</strong>.</li>
+      <li>All 3 IT teams are responsible for serving all End Users in the organization.</li>
+      <li>All employees (End Users) must comply with the defined security standards.</li>
+      <li>Managers at every level must ensure their subordinates follow the IT Security Policy.</li>
+    </ul>`
+  },
+  2:{ num:'02', th:{title:'Information System Usage Rules',sub:'กฎการใช้ระบบสารสนเทศ'}, en:{title:'Information System Usage Rules',sub:'Rules for information system usage'},
+    th_body:`<div class="m-alert red"><div class="m-alert-icon">⛔</div><div>ห้ามใช้อุปกรณ์ IT ส่วนตัวเชื่อมต่อกับ <strong>ระบบโดเมนของบริษัท</strong></div></div><div class="modal-section-title">ข้อห้ามสำคัญ</div><ul class="modal-list"><li>ห้ามใช้อุปกรณ์ส่วนตัวกับ Domain บริษัท <span class="tag-red">ห้ามเด็ดขาด</span></li><li>Remote Access ต้องใช้ <strong>VPN Gateway</strong> และ Admin ติดตั้งเท่านั้น</li><li>ห้ามใช้อุปกรณ์ IT บริษัทเพื่อวัตถุประสงค์ส่วนตัว</li><li>กิจกรรมทั้งหมดบน PC ถูกบันทึกอัตโนมัติ</li></ul><div class="modal-section-title">การสำรองข้อมูล</div><div class="m-alert green"><div class="m-alert-icon">✅</div><div>สำรองข้อมูล <strong>อัตโนมัติทุกวัน</strong> เก็บ 31 วัน และ Backup เทปทุกสิ้นเดือน</div></div><ul class="modal-list"><li>จัดเก็บข้อมูลสำคัญใน <strong>File Server</strong> เสมอ</li><li>กู้คืนข้อมูลผ่าน IT Request ที่ <strong>http://tcpr-intranet</strong></li><li>ส่งไฟล์สำคัญออกนอกต้องทำ <strong>Encryption (17-C-008)</strong></li><li>นำข้อมูลออกนอกสำนักงานต้องได้รับอนุญาตล่วงหน้า</li></ul>`,
+    en_body:`<div class="m-alert red"><div class="m-alert-icon">⛔</div><div>Personal IT devices are <strong>strictly prohibited</strong> from connecting to the company's domain.</div></div><div class="modal-section-title">Key Prohibitions</div><ul class="modal-list"><li>Personal devices must not connect to the company Domain. <span class="tag-red">strictly prohibited</span></li><li>Remote access must use <strong>VPN Gateway only</strong>, installed by the administrator.</li><li>Company IT equipment must not be used for personal purposes.</li><li>All PC activities are automatically logged.</li></ul><div class="modal-section-title">Data Backup</div><div class="m-alert green"><div class="m-alert-icon">✅</div><div>Automatic daily backup, retained <strong>31 days</strong>, with monthly tape backups.</div></div><ul class="modal-list"><li>Always store important data on the <strong>File Server</strong>.</li><li>Request data recovery via IT Request at <strong>http://tcpr-intranet</strong>.</li><li>Sending important files externally requires <strong>Encryption (17-C-008)</strong>.</li><li>Taking data outside the office requires prior approval from the data custodian.</li></ul>`
+  },
+  3:{ num:'03', th:{title:'Equipment Usage Rules',sub:'กฎการใช้อุปกรณ์สารสนเทศ'}, en:{title:'Equipment Usage Rules',sub:'IT equipment usage rules'},
+    th_body:`<div class="modal-section-title">กฎการใช้คอมพิวเตอร์</div><ul class="modal-list"><li>ลงทะเบียนอุปกรณ์ที่ <strong>http://tcpr-asset</strong></li><li><strong>ล็อกหน้าจอ</strong> เมื่อลุกออกจากที่นั่ง ปิดเครื่องเมื่อเลิกงาน</li><li>เข้ารหัส Hard Disk PC ที่ใช้นอกสำนักงาน <span class="tag-red">บังคับ</span></li><li>เก็บ Laptop ในที่มีล็อคหรือใช้โซ่ล็อค</li><li>การย้าย/ทิ้ง PC ต้องแจ้ง <strong>IT Asset Manager ก่อน</strong></li></ul><div class="modal-section-title">อุปกรณ์มือถือ</div><div class="m-alert amber"><div class="m-alert-icon">📱</div><div>เชื่อมต่อระบบภายในได้เฉพาะ <strong>อีเมลเท่านั้น</strong></div></div><div class="modal-section-title">สื่อบันทึกข้อมูล</div><ul class="modal-list"><li>ควบคุมผ่าน <strong>IP Guard</strong> ที่ติดตั้งทุกเครื่อง</li><li>เก็บในที่มีล็อค ตรวจสอบทุก <strong>6 เดือน</strong></li><li>ก่อนทิ้ง/คืน ต้องลบข้อมูลด้วยซอฟต์แวร์เฉพาะและขอใบรับรอง</li></ul>`,
+    en_body:`<div class="modal-section-title">Computer Rules</div><ul class="modal-list"><li>Register devices at <strong>http://tcpr-asset</strong>.</li><li><strong>Lock screen</strong> when leaving seat; shut down when leaving work.</li><li>Encrypt hard disk of PCs used outside office. <span class="tag-red">Mandatory</span></li><li>Store laptops in locked locations or use a cable lock.</li><li>Notify <strong>IT Asset Manager before</strong> relocating or disposing of any PC.</li></ul><div class="modal-section-title">Mobile Devices</div><div class="m-alert amber"><div class="m-alert-icon">📱</div><div>Internal system access allowed for <strong>email only</strong>.</div></div><div class="modal-section-title">Storage Media</div><ul class="modal-list"><li>Controlled by <strong>IP Guard</strong> on all company computers.</li><li>Store in locked locations; audit every <strong>6 months</strong>.</li><li>Before disposal/return, wipe data with specialized software and obtain a certificate.</li></ul>`
+  },
+  4:{ num:'04', th:{title:'Password Management',sub:'การจัดการ ID ผู้ใช้ และรหัสผ่าน'}, en:{title:'Password Management',sub:'User ID and password management'},
+    th_body:`<div class="modal-section-title">ข้อกำหนดรหัสผ่าน</div><div class="pw-table"><div class="pw-row"><div class="pw-dot2 g"></div><div class="lbl">ความยาวขั้นต่ำ</div><div class="vl">16 ตัวอักษร</div></div><div class="pw-row"><div class="pw-dot2 g"></div><div class="lbl">ตัวพิมพ์ใหญ่-เล็ก</div><div class="vl">A-Z, a-z</div></div><div class="pw-row"><div class="pw-dot2 g"></div><div class="lbl">ตัวเลขและอักขระพิเศษ</div><div class="vl">0-9, !@#$</div></div><div class="pw-row"><div class="pw-dot2 r"></div><div class="lbl">ห้ามใช้รหัสเดิมย้อนหลัง</div><div class="vl">4 ครั้งล่าสุด</div></div><div class="pw-row"><div class="pw-dot2 r"></div><div class="lbl">ห้ามบันทึกในเบราว์เซอร์/แชร์</div><div class="vl">ทุกกรณี</div></div></div><div class="m-alert amber"><div class="m-alert-icon">⚠️</div><div>รหัสผ่านเริ่มต้น <strong>ต้องเปลี่ยนทันที</strong> หลังได้รับจาก Admin</div></div><div class="modal-section-title">ข้อห้าม</div><ul class="modal-list"><li>ห้ามตั้งรหัสเดาง่าย เช่น ชื่อ, วันเกิด <span class="tag-red">ห้ามเด็ดขาด</span></li><li>ห้ามแชร์ Password กับผู้อื่น</li><li>หาก Password รั่วไหล <strong>ต้องเปลี่ยนทันที</strong> และแจ้ง Admin</li></ul>`,
+    en_body:`<div class="modal-section-title">Password Requirements</div><div class="pw-table"><div class="pw-row"><div class="pw-dot2 g"></div><div class="lbl">Minimum length</div><div class="vl">16 characters</div></div><div class="pw-row"><div class="pw-dot2 g"></div><div class="lbl">Upper & lower case letters</div><div class="vl">A-Z, a-z</div></div><div class="pw-row"><div class="pw-dot2 g"></div><div class="lbl">Numbers & special chars</div><div class="vl">0-9, !@#$</div></div><div class="pw-row"><div class="pw-dot2 r"></div><div class="lbl">Cannot reuse previous</div><div class="vl">Last 4 passwords</div></div><div class="pw-row"><div class="pw-dot2 r"></div><div class="lbl">Do not save/share</div><div class="vl">Never</div></div></div><div class="m-alert amber"><div class="m-alert-icon">⚠️</div><div>Initial passwords from Admin <strong>must be changed immediately</strong>.</div></div><div class="modal-section-title">Prohibitions</div><ul class="modal-list"><li>Do not use guessable passwords (name, birthdate). <span class="tag-red">strictly prohibited</span></li><li>Never share your password with anyone.</li><li>If password is compromised, <strong>change immediately</strong> and notify Admin.</li></ul>`
+  },
+  5:{ num:'05', th:{title:'Email Usage Rules',sub:'กฎการใช้อีเมล'}, en:{title:'Email Usage Rules',sub:'Rules for email usage'},
+    th_body:`<div class="m-alert red"><div class="m-alert-icon">🎣</div><div>อีเมลน่าสงสัย: <strong>ห้ามเปิด Attachment หรือคลิก URL</strong> — แจ้ง Admin ทันที</div></div><div class="modal-section-title">กฎการใช้อีเมล</div><ul class="modal-list"><li>ใช้เฉพาะอีเมลที่ IT กำหนด <strong>ห้ามใช้อีเมลส่วนตัวทำงาน</strong></li><li>ตรวจสอบ Email Address ผู้รับก่อนส่งทุกครั้ง</li><li>ห้าม Forward Email อัตโนมัติออกนอก <strong>@tcp.co.th</strong></li></ul><div class="modal-section-title">วิธีจัดการอีเมลน่าสงสัย</div><ul class="modal-list"><li>ลบทิ้ง — ไม่เปิด Attachment ไม่คลิก URL ไม่ตอบกลับ</li><li>หากเผลอเปิดหรือคลิก <strong>แจ้ง Admin ทันที</strong></li></ul>`,
+    en_body:`<div class="m-alert red"><div class="m-alert-icon">🎣</div><div>Suspicious email: <strong>do not open attachments or click URLs</strong> — notify Admin immediately.</div></div><div class="modal-section-title">Email Rules</div><ul class="modal-list"><li>Use only IT-approved email. <strong>Do not use personal email for work.</strong></li><li>Always verify the recipient's email address before sending.</li><li>Do not auto-forward emails outside <strong>@tcp.co.th</strong>.</li></ul><div class="modal-section-title">Handling Suspicious Emails</div><ul class="modal-list"><li>Delete it — do not open attachments, click URLs, or reply.</li><li>If you accidentally clicked anything, <strong>notify Admin immediately</strong>.</li></ul>`
+  },
+  6:{ num:'06', th:{title:'Internet Usage Rules',sub:'กฎการใช้อินเทอร์เน็ต'}, en:{title:'Internet Usage Rules',sub:'Internet and cloud usage rules'},
+    th_body:`<div class="m-alert red"><div class="m-alert-icon">📶</div><div>ห้ามใช้อุปกรณ์บริษัทเชื่อมต่อ <strong>Public WiFi</strong> โดยเด็ดขาด</div></div><div class="modal-section-title">การใช้ Cloud สาธารณะ</div><ul class="modal-list"><li>ปรึกษา Admin ก่อนใช้บริการ Cloud สาธารณะใดๆ</li><li>ใช้เฉพาะ Cloud ที่ IT อนุมัติเท่านั้น</li><li>ห้ามโพสต์ข้อมูลธุรกิจบน Cloud ที่ไม่มีการควบคุมผู้เข้าถึง <span class="tag-red">ห้ามเด็ดขาด</span></li><li>ดูรายละเอียด: IT Security Policy > 5.4 > (8)</li></ul>`,
+    en_body:`<div class="m-alert red"><div class="m-alert-icon">📶</div><div>Company devices must <strong>never connect to public WiFi</strong> under any circumstances.</div></div><div class="modal-section-title">Public Cloud Usage</div><ul class="modal-list"><li>Always consult the system administrator before using any public cloud service.</li><li>Use only IT-approved cloud systems.</li><li>Do not post business data on public clouds without access controls. <span class="tag-red">strictly prohibited</span></li><li>See: IT Security Policy > 5.4 > (8) Use of Public Cloud.</li></ul>`
+  },
+  7:{ num:'07', th:{title:'Virus Prevention Measures',sub:'มาตรการป้องกันไวรัส'}, en:{title:'Virus Prevention Measures',sub:'Antivirus and incident response'},
+    th_body:`<div class="m-alert green"><div class="m-alert-icon">🛡️</div><div>ติดตั้ง Antivirus ที่ IT กำหนด และ <strong>อัปเดต Patch สม่ำเสมอ</strong></div></div><div class="modal-section-title">ข้อปฏิบัติ</div><ul class="modal-list"><li>ติดตั้ง Antivirus ที่ IT กำหนดบน PC ทุกเครื่อง <span class="tag-red">บังคับ</span></li><li>อัปเดต Patch ให้ทันสมัยเสมอ ห้ามปิดการสแกน</li><li>หากพบสัญญาณไวรัส <strong>แจ้ง Admin ทันที</strong></li><li>เมื่อ IT ออกคำสั่งฉุกเฉิน <strong>ร่วมมือและดำเนินการทันที</strong></li></ul>`,
+    en_body:`<div class="m-alert green"><div class="m-alert-icon">🛡️</div><div>Install IT-specified antivirus and <strong>always keep patches current</strong>.</div></div><div class="modal-section-title">Requirements</div><ul class="modal-list"><li>Install IT-specified antivirus on all PCs. <span class="tag-red">Mandatory</span></li><li>Keep patches current. Do not disable scanning.</li><li>If virus symptoms detected, <strong>notify Admin immediately</strong>.</li><li>When IT issues emergency instructions, <strong>cooperate and act immediately</strong>.</li></ul>`
+  },
+  8:{ num:'08', th:{title:'Legal Compliance',sub:'การปฏิบัติตามข้อกำหนดทางกฎหมาย'}, en:{title:'Legal Compliance',sub:'Software licensing and legal obligations'},
+    th_body:`<div class="modal-section-title">ลิขสิทธิ์ซอฟต์แวร์</div><ul class="modal-list"><li>จำนวนการติดตั้งต้องไม่เกินจำนวน License ที่มี</li><li>การติดตั้ง/ถอนซอฟต์แวร์ต้องยื่น <strong>IT Request (http://tcpr-intranet)</strong> ตามขั้นตอน 17-C-001</li><li>หากพบเกิน License: ซื้อเพิ่มหรือถอนการติดตั้ง</li><li>ห้ามใช้ซอฟต์แวร์ละเมิดลิขสิทธิ์ <span class="tag-red">ห้ามเด็ดขาด</span></li></ul><div class="modal-section-title">การส่งหลักฐาน</div><ul class="modal-list"><li>เมื่อหน่วยงานรัฐขอข้อมูล ให้ส่งตามคำสั่งของหน่วยงานภายในบริษัท</li></ul>`,
+    en_body:`<div class="modal-section-title">Software License Control</div><ul class="modal-list"><li>Software installations must not exceed available licenses.</li><li>Install/uninstall via <strong>IT Request (http://tcpr-intranet)</strong> per procedure 17-C-001.</li><li>If over-licensed: purchase additional licenses or uninstall.</li><li>Using pirated software is <span class="tag-red">strictly prohibited</span>.</li></ul><div class="modal-section-title">Evidence Submission</div><ul class="modal-list"><li>When government authorities request information, submit as directed by the relevant internal department.</li></ul>`
+  },
+  9:{ num:'09', th:{title:'Employee Training Requirements',sub:'ข้อกำหนดการอบรมพนักงาน'}, en:{title:'Employee Training Requirements',sub:'Annual training obligations'},
+    th_body:`<div class="m-alert blue"><div class="m-alert-icon">📚</div><div>พนักงานทุกคนต้องอบรม IT Security <strong>ปีละ 1 ครั้ง</strong></div></div><div class="modal-section-title">ข้อกำหนดการอบรม</div><ul class="modal-list"><li>อบรม IT Security <strong>ปีละ 1 ครั้ง</strong> <span class="tag-red">บังคับ</span></li><li>Admin จัดอบรมให้พนักงานใหม่, พนักงานชั่วคราว, นักศึกษาฝึกงาน และ Outsource</li><li>ผู้จัดการต้องให้คำแนะนำผู้ใต้บังคับบัญชาเข้าร่วมการอบรม</li></ul><div class="modal-section-title">เมื่อพนักงานลาออก/โอนย้าย</div><ul class="modal-list"><li>ผู้จัดการแจ้งลบหรือคืนข้อมูลสำคัญจากตำแหน่งนั้น</li><li>คืนสิทธิ์การเข้าถึงระบบทั้งหมดให้ Admin ทันที</li></ul><div class="modal-section-title">ความร่วมมือฉุกเฉิน</div><ul class="modal-list"><li>เมื่อได้รับคำสั่งฉุกเฉินจาก IT ต้อง <strong>ร่วมมือและดำเนินการทันที</strong></li></ul>`,
+    en_body:`<div class="m-alert blue"><div class="m-alert-icon">📚</div><div>All employees must receive IT Security training <strong>once per year</strong>.</div></div><div class="modal-section-title">Training Requirements</div><ul class="modal-list"><li>Annual IT Security training is <strong>mandatory</strong> for all users. <span class="tag-red">Required</span></li><li>Admin must train new employees, temporary staff, interns, and outsourced personnel.</li><li>Department managers must ensure subordinates attend training.</li></ul><div class="modal-section-title">When Employees Leave / Transfer</div><ul class="modal-list"><li>Managers must ensure important data from that role is deleted or returned.</li><li>Return all system access rights to Admin immediately.</li></ul><div class="modal-section-title">Emergency Cooperation</div><ul class="modal-list"><li>When IT issues emergency instructions, <strong>cooperate and act immediately</strong>.</li></ul>`
+  },
+  10:{ num:'10', th:{title:'AI Usage Policy',sub:'กฎการใช้งาน AI ในที่ทำงาน'}, en:{title:'AI Usage Policy',sub:'Rules for using AI tools at work'},
+    th_body:`<div class="m-alert red"><div class="m-alert-icon">🤖</div><div>ห้าม <strong>นำข้อมูลความลับของบริษัท</strong> ป้อนเข้าสู่ AI สาธารณะ เช่น ChatGPT, Gemini, Copilot</div></div>
+    <div class="modal-section-title">ข้อมูลที่ห้ามนำเข้า AI สาธารณะ</div>
+    <ul class="modal-list">
+      <li>ข้อมูลลูกค้า, รายชื่อ, เบอร์โทร, ข้อมูลสัญญา <span class="tag-red">ห้ามเด็ดขาด</span></li>
+      <li>ข้อมูลการเงิน, ราคาต้นทุน, ข้อมูลเงินเดือน <span class="tag-red">ห้ามเด็ดขาด</span></li>
+      <li>Source Code ระบบภายใน, ข้อมูล Server, Credential ใดๆ <span class="tag-red">ห้ามเด็ดขาด</span></li>
+      <li>แผนงานลับ, กลยุทธ์ธุรกิจ, ข้อมูล M&A <span class="tag-red">ห้ามเด็ดขาด</span></li>
+    </ul>
+    <div class="modal-section-title">แนวปฏิบัติที่ถูกต้อง</div>
+    <ul class="modal-list">
+      <li>ใช้ AI ได้เฉพาะกับ <strong>ข้อมูลทั่วไป</strong> ที่ไม่เกี่ยวกับความลับบริษัท</li>
+      <li>หากบริษัทมี AI Tool ที่อนุมัติแล้ว (เช่น Microsoft Copilot สำหรับองค์กร) ให้ใช้เครื่องมือนั้นแทน</li>
+      <li>ปรึกษา IT ก่อนนำ AI Tool ใหม่มาใช้ในงาน</li>
+      <li>จำไว้ว่า: ข้อมูลที่ป้อนเข้า AI อาจถูกนำไป <strong>train model</strong> และเข้าถึงได้จากภายนอก</li>
+    </ul>`,
+    en_body:`<div class="m-alert red"><div class="m-alert-icon">🤖</div><div>Do <strong>NOT input confidential company data</strong> into public AI tools such as ChatGPT, Gemini, or Copilot.</div></div>
+    <div class="modal-section-title">Data Prohibited from AI Input</div>
+    <ul class="modal-list">
+      <li>Customer data, contacts, phone numbers, contract details <span class="tag-red">strictly prohibited</span></li>
+      <li>Financial data, cost prices, salary information <span class="tag-red">strictly prohibited</span></li>
+      <li>Internal source code, server data, any credentials <span class="tag-red">strictly prohibited</span></li>
+      <li>Confidential plans, business strategies, M&A information <span class="tag-red">strictly prohibited</span></li>
+    </ul>
+    <div class="modal-section-title">Correct Practices</div>
+    <ul class="modal-list">
+      <li>Use AI only with <strong>general, non-confidential information</strong>.</li>
+      <li>If the company provides an approved AI tool (e.g. Microsoft Copilot for Enterprise), use that instead.</li>
+      <li>Consult IT before adopting any new AI tool into your work process.</li>
+      <li>Remember: data entered into public AI may be used for <strong>model training</strong> and accessed externally.</li>
+    </ul>`
+  },
+  11:{ num:'11', th:{title:'Deepfake & Social Engineering',sub:'การหลอกลวงด้วยเสียง/วิดีโอปลอม'}, en:{title:'Deepfake & Social Engineering',sub:'Fake voice/video fraud and advanced attacks'},
+    th_body:`<div class="m-alert amber"><div class="m-alert-icon">🎭</div><div>ผู้โจมตีอาจ <strong>ปลอมเสียงหรือวิดีโอ</strong> ของผู้บริหาร เพื่อสั่งโอนเงินหรือขอข้อมูลสำคัญ</div></div>
+    <div class="modal-section-title">รูปแบบการโจมตีที่พบบ่อย</div>
+    <ul class="modal-list">
+      <li><strong>Vishing (Voice Phishing):</strong> โทรมาแอบอ้างเป็น CEO/ผู้จัดการ สั่งโอนเงินด่วน</li>
+      <li><strong>Deepfake Video Call:</strong> วิดีโอคอลที่ใบหน้าและเสียงถูกสร้างด้วย AI เพื่อหลอกลวง</li>
+      <li><strong>Deepfake Audio:</strong> ปลอมเสียงผู้บริหารส่งผ่าน Line หรือโทรศัพท์</li>
+      <li><strong>Urgent Email:</strong> อีเมลด่วนที่อ้างว่าเป็นผู้บริหาร ขอข้อมูลหรือให้โอนเงิน</li>
+    </ul>
+    <div class="modal-section-title">วิธีป้องกัน</div>
+    <ul class="modal-list">
+      <li>ยืนยันตัวตนผ่าน <strong>ช่องทางที่ 2</strong> เสมอก่อนโอนเงินหรือให้ข้อมูล (โทรกลับโดยตรง, Line แยก)</li>
+      <li>สังเกต Deepfake: <strong>ริมฝีปากไม่ตรงเสียง</strong>, แสงผิดธรรมชาติ, เสียงกระตุก, ตากระพริบผิดปกติ</li>
+      <li>ห้ามโอนเงินโดยไม่มีการอนุมัติ <strong>เป็นลายลักษณ์อักษร</strong></li>
+      <li>แจ้ง IT และผู้จัดการทันทีเมื่อพบเหตุน่าสงสัย</li>
+    </ul>`,
+    en_body:`<div class="m-alert amber"><div class="m-alert-icon">🎭</div><div>Attackers may use <strong>AI-generated fake voice or video</strong> of executives to order money transfers or request sensitive data.</div></div>
+    <div class="modal-section-title">Common Attack Types</div>
+    <ul class="modal-list">
+      <li><strong>Vishing (Voice Phishing):</strong> Caller impersonates CEO/manager and requests urgent money transfer.</li>
+      <li><strong>Deepfake Video Call:</strong> AI-generated face and voice used in video calls to deceive employees.</li>
+      <li><strong>Deepfake Audio:</strong> Fake executive voice sent via Line or phone call.</li>
+      <li><strong>Urgent Email:</strong> Emails claiming to be from executives requesting data or money transfers.</li>
+    </ul>
+    <div class="modal-section-title">How to Protect Yourself</div>
+    <ul class="modal-list">
+      <li>Always verify identity through a <strong>second channel</strong> before transferring money or sharing data (call back directly, separate Line message).</li>
+      <li>Deepfake signs: <strong>lip-sync mismatch</strong>, unnatural lighting, audio glitches, abnormal blinking.</li>
+      <li>Never transfer money without <strong>written authorization</strong>.</li>
+      <li>Report any suspicious incident to IT and your manager immediately.</li>
+    </ul>`
+  },
+  12:{ num:'12', th:{title:'Work From Home Security',sub:'ความปลอดภัยเมื่อทำงานนอกออฟฟิศ'}, en:{title:'Work From Home Security',sub:'Security outside the office'},
+    th_body:`<div class="m-alert red"><div class="m-alert-icon">🏠</div><div>ห้ามใช้ <strong>WiFi สาธารณะหรือ WiFi คาเฟ่</strong> กับอุปกรณ์บริษัทโดยไม่เปิด VPN</div></div>
+    <div class="modal-section-title">ข้อปฏิบัติเมื่อทำงานนอกออฟฟิศ</div>
+    <ul class="modal-list">
+      <li>เชื่อมต่อ <strong>VPN</strong> ทุกครั้งก่อนเข้าถึงระบบบริษัท</li>
+      <li>ล็อกหน้าจอเสมอเมื่อลุกออกจากที่นั่ง แม้แค่ชั่วคราว</li>
+      <li>ใช้ <strong>Privacy Screen Filter</strong> ป้องกันคนข้างๆ มองเห็นหน้าจอ</li>
+      <li>ไม่ประชุมหรือพูดคุยเรื่องลับในที่สาธารณะที่มีคนอื่นได้ยิน</li>
+      <li>ห้ามพิมพ์เอกสารสำคัญที่เครื่องพิมพ์สาธารณะ (คาเฟ่, ห้องสมุด ฯลฯ)</li>
+    </ul>
+    <div class="modal-section-title">ความปลอดภัย WiFi ที่บ้าน</div>
+    <ul class="modal-list">
+      <li>ตั้งค่า Router ให้ใช้ <strong>WPA2 หรือ WPA3</strong> และเปลี่ยน Default Password</li>
+      <li>แยก <strong>Guest Network</strong> สำหรับอุปกรณ์อื่นๆ ไม่ให้อยู่ใน Network เดียวกับ PC งาน</li>
+      <li>อัปเดต Firmware ของ Router เป็นประจำ</li>
+    </ul>`,
+    en_body:`<div class="m-alert red"><div class="m-alert-icon">🏠</div><div>Never use <strong>public WiFi or café networks</strong> with company devices without enabling VPN.</div></div>
+    <div class="modal-section-title">Practices When Working Remotely</div>
+    <ul class="modal-list">
+      <li>Always connect to <strong>VPN</strong> before accessing company systems.</li>
+      <li>Lock your screen whenever you step away, even briefly.</li>
+      <li>Use a <strong>Privacy Screen Filter</strong> to prevent others from seeing your screen.</li>
+      <li>Do not discuss confidential matters in public where others may overhear.</li>
+      <li>Never print sensitive documents on <strong>public printers</strong> (cafés, libraries, etc.).</li>
+    </ul>
+    <div class="modal-section-title">Home WiFi Security</div>
+    <ul class="modal-list">
+      <li>Configure your router to use <strong>WPA2 or WPA3</strong> and change the default password.</li>
+      <li>Create a separate <strong>Guest Network</strong> for other devices, isolated from your work PC.</li>
+      <li>Keep your router firmware up to date.</li>
+    </ul>`
+  },
+  13:{ num:'13', th:{title:'PDPA & การคุ้มครองข้อมูลส่วนบุคคล',sub:'พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA)'}, en:{title:'PDPA & Personal Data Protection',sub:'Thai Personal Data Protection Act'},
+    th_body:`<div class="m-alert amber"><div class="m-alert-icon">⚖️</div><div>กฎหมาย <strong>PDPA</strong> มีผลบังคับใช้แล้ว — ฝ่าฝืนมีโทษปรับสูงสุด 5 ล้านบาท และจำคุกสูงสุด 1 ปี</div></div>
+    <div class="modal-section-title">ข้อมูลส่วนบุคคลคืออะไร</div>
+    <ul class="modal-list">
+      <li>ชื่อ-นามสกุล, ที่อยู่, เบอร์โทรศัพท์, อีเมล, รูปถ่าย, IP Address ฯลฯ</li>
+      <li>ข้อมูลอ่อนไหว เช่น สุขภาพ, ศาสนา, ข้อมูลพันธุกรรม — ต้องระมัดระวังเป็นพิเศษ <span class="tag-red">ความเสี่ยงสูง</span></li>
+    </ul>
+    <div class="modal-section-title">หน้าที่ของพนักงาน</div>
+    <ul class="modal-list">
+      <li>เก็บข้อมูลส่วนบุคคลเฉพาะที่ <strong>จำเป็นและได้รับความยินยอม</strong> เท่านั้น</li>
+      <li>ห้ามแชร์หรือส่งต่อข้อมูลส่วนบุคคลโดยไม่ได้รับอนุญาต</li>
+      <li>ลบข้อมูลส่วนบุคคลเมื่อหมดความจำเป็น</li>
+      <li>ห้ามนำข้อมูลออกนอกองค์กรโดยไม่มีมาตรการคุ้มครอง</li>
+      <li>หากข้อมูลรั่วไหล ต้องแจ้ง IT <strong>ภายใน 72 ชั่วโมง</strong></li>
+      <li>ไม่แน่ใจ ปรึกษา IT หรือ Legal Department ทันที</li>
+    </ul>`,
+    en_body:`<div class="m-alert amber"><div class="m-alert-icon">⚖️</div><div>Thailand's <strong>PDPA</strong> is in force — violations carry fines up to 5 million THB and imprisonment up to 1 year.</div></div>
+    <div class="modal-section-title">What is Personal Data?</div>
+    <ul class="modal-list">
+      <li>Name, address, phone number, email, photos, IP address, etc.</li>
+      <li>Sensitive data (health, religion, genetic data) requires extra caution. <span class="tag-red">High risk</span></li>
+    </ul>
+    <div class="modal-section-title">Employee Obligations</div>
+    <ul class="modal-list">
+      <li>Collect personal data only when <strong>necessary and with consent</strong>.</li>
+      <li>Do not share or forward personal data without authorization.</li>
+      <li>Delete personal data when it is no longer needed.</li>
+      <li>Do not take personal data outside the organization without adequate protection.</li>
+      <li>If data is breached, notify IT <strong>within 72 hours</strong>.</li>
+      <li>When in doubt, consult IT or the Legal Department immediately.</li>
+    </ul>`
+  }
+};
+
+function renderTopics() {
+  document.getElementById('topics-grid').innerHTML = TOPICS.map((tp,i) => `
+    <div class="topic-card" onclick="openModal(${i+1})">
+      <div class="topic-num">${tp.num}</div>
+      <h3>${tp[lang].title}</h3>
+      <p>${tp[lang].desc}</p>
+      <div class="card-footer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        ${TR[lang].seeMore}
+      </div>
+    </div>`).join('');
+}
+
+function renderAccordions() {
+  document.getElementById('accordion-wrap').innerHTML = ACCORDIONS.map(ac => `
+    <div class="rule-group">
+      <div class="rule-header" onclick="toggle(this)">
+        <div class="rule-header-left">
+          <div class="rule-icon" style="background:${ac.bg}">${ac.icon}</div>
+          <div>
+            <div class="rule-title">${ac[lang].title}</div>
+            <div class="rule-title-en">${ac[lang].sub}</div>
+          </div>
+        </div>
+        <svg class="rule-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="rule-body">${ac[lang+'_body']}</div>
+    </div>`).join('');
+}
+
+function updateText() {
+  const T = TR[lang];
+  document.getElementById('hero-eyebrow').textContent = T.eyebrow;
+  document.getElementById('hero-title').innerHTML = T.heroTitle;
+  document.getElementById('hero-sub').innerHTML = T.heroSub;
+  document.getElementById('lbl-deadline').textContent = T.lblDeadline;
+  document.getElementById('val-deadline').textContent = T.valDeadline;
+  document.getElementById('lbl-duration').textContent = T.lblDuration;
+  document.getElementById('val-duration').textContent = T.valDuration;
+  document.getElementById('lbl-audience').textContent = T.lblAudience;
+  document.getElementById('val-audience').textContent = T.valAudience;
+  document.getElementById('lbl-format').textContent = T.lblFormat;
+  document.getElementById('val-format').textContent = T.valFormat;
+  document.getElementById('lbl-goto').textContent = T.lblGoto;
+  document.getElementById('lbl-section-overview').textContent = T.lblSectionOv;
+  document.getElementById('lbl-section-overview-title').textContent = T.lblSectionOvTitle;
+  document.getElementById('lbl-section-detail').textContent = T.lblSectionDt;
+  document.getElementById('lbl-section-detail-title').textContent = T.lblSectionDtTitle;
+  document.getElementById('lbl-cta-title').textContent = T.ctaTitle;
+  document.getElementById('lbl-cta-sub').textContent = T.ctaSub;
+  document.getElementById('lbl-cta-btn').textContent = T.ctaBtn;
+  document.getElementById('lbl-or').textContent = T.orDiv;
+  document.getElementById('lbl-copy').textContent = T.copyBtn;
+  document.getElementById('lbl-footer').innerHTML = T.footer;
+  document.getElementById('lbl-footer2').innerHTML = T.footer2;
+}
+
+function setLang(l) {
+  lang = l;
+  document.getElementById('btn-th').classList.toggle('active', l==='th');
+  document.getElementById('btn-en').classList.toggle('active', l==='en');
+  updateText();
+  renderTopics();
+  renderAccordions();
+}
+
+function openModal(id) {
+  const d = MODAL_DATA[id];
+  if (!d) return;
+  document.getElementById('modal-num').textContent = d.num;
+  document.getElementById('modal-title').textContent = d[lang].title;
+  document.getElementById('modal-title-sub').textContent = d[lang].sub;
+  document.getElementById('modal-body').innerHTML = d[lang+'_body'];
+  document.getElementById('modal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function closeModalOutside(e) { if(e.target===document.getElementById('modal')) closeModal(); }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+function toggle(h) { h.classList.toggle('open'); h.nextElementSibling.classList.toggle('open'); }
+function openForm(e) { e.preventDefault(); window.open(FORM_URL,'_blank'); }
+function copyUrl() {
+  navigator.clipboard.writeText(FORM_URL).catch(()=>{ document.getElementById('form-url-display').select(); document.execCommand('copy'); });
+  const btn = document.getElementById('lbl-copy');
+  btn.textContent = TR[lang].copyDone;
+  setTimeout(()=>{ btn.textContent = TR[lang].copyBtn; }, 2000);
+}
+
+document.getElementById('form-url-display').value = FORM_URL;
+
+// Generate QR Code — library appends <img> inside the target div
+window.addEventListener('load', function() {
+  try {
+    new QRCode(document.getElementById('qr-canvas'), {
+      text: FORM_URL,
+      width: 140,
+      height: 140,
+      colorDark: '#0a0f1e',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  } catch(e) {
+    // fallback: use Google Charts QR API
+    var img = document.createElement('img');
+    img.src = 'https://chart.googleapis.com/chart?cht=qr&chs=140x140&chl=' + encodeURIComponent(FORM_URL) + '&chco=0a0f1e';
+    img.width = 140;
+    img.height = 140;
+    img.style.display = 'block';
+    document.getElementById('qr-canvas').appendChild(img);
+  }
+});
+
+renderTopics();
+renderAccordions();
+</script>
+</body>
+</html>
